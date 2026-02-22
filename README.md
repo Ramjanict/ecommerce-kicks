@@ -1,6 +1,6 @@
 # KICKS — Sneaker Hyperstore
 
-A production-ready sneaker e-commerce app built with React 18, TypeScript, Tailwind CSS v3, shadcn/ui, Redux Toolkit, and Framer Motion.
+A production-ready sneaker e-commerce app built with React 18, TypeScript, Tailwind CSS v4, shadcn/ui, Redux Toolkit, and Framer Motion.
 
 ## Tech Stack
 

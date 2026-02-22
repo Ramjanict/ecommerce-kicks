@@ -1,26 +1,28 @@
-import { motion } from 'framer-motion'
-import { fadeInUp } from '@/lib/motionVariants'
-import { ReactNode } from 'react'
-
 interface SectionTitleProps {
-  children: ReactNode
-  action?: ReactNode
-  className?: string
+  title: string;
+  subtitle?: string;
+  className?: string;
 }
 
-export default function SectionTitle({ children, action, className }: SectionTitleProps) {
+const SectionTitle: React.FC<SectionTitleProps> = ({
+  title,
+  subtitle,
+  className,
+}) => {
   return (
-    <motion.div
-      variants={fadeInUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      className={`flex items-end justify-between mb-6 ${className ?? ''}`}
-    >
-      <h2 className="font-display font-black text-3xl md:text-4xl tracking-tight text-kicks-dark uppercase">
-        {children}
+    <div>
+      <h2
+        className={`text-[40px] md:text-[74px] max-w-[600px] fon-semibold uppercase text-white leading-none tracking-normal leading-[0.95] ${className}`}
+      >
+        {title}
       </h2>
-      {action && <div>{action}</div>}
-    </motion.div>
-  )
-}
+      {subtitle && (
+        <p className={`text-xl mb-5 text-[#E7E7E3] max-w-[400px]`}>
+          {subtitle}
+        </p>
+      )}
+    </div>
+  );
+};
+
+export default SectionTitle;

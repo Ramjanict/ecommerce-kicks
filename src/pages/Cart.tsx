@@ -1,34 +1,44 @@
-import { AnimatePresence, motion } from 'framer-motion'
-import { ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { useAppSelector } from '@/app/hooks'
-import { selectCartItems, selectCartTotal } from '@/features/cart/cartSlice'
-import { fadeInUp } from '@/lib/motionVariants'
-import Container from '@/components/layout/Container'
-import PageTransition from '@/components/layout/PageTransition'
-import CartItemComponent from '@/features/cart/CartItem'
-import OrderSummary from '@/features/cart/OrderSummary'
-import ProductCard from '@/features/products/components/ProductCard'
-import Newsletter from '@/components/shared/Newsletter'
-import { products } from '@/features/products/productData'
+import { useAppSelector } from "@/app/hooks";
+import Container from "@/components/layout/Container";
+import PageTransition from "@/components/layout/PageTransition";
+import CartItemComponent from "@/features/cart/CartItem";
+import { selectCartItems, selectCartTotal } from "@/features/cart/cartSlice";
+import OrderSummary from "@/features/cart/OrderSummary";
+import ProductCard from "@/features/products/components/ProductCard";
+import { products } from "@/features/products/productData";
+import { fadeInUp } from "@/lib/motionVariants";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
-  const items = useAppSelector(selectCartItems)
-  const total = useAppSelector(selectCartTotal)
+  const items = useAppSelector(selectCartItems);
+  const total = useAppSelector(selectCartTotal);
 
   return (
     <PageTransition>
       <section className="py-5 md:py-8">
         <Container>
-
           {/* Sale banner */}
-          <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="mb-5">
-            <h2 className="font-bold text-lg md:text-xl text-kicks-dark">Saving to celebrate</h2>
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
+            className="mb-5"
+          >
+            <h2 className="font-bold text-lg md:text-xl text-kicks-dark">
+              Saving to celebrate
+            </h2>
             <p className="text-gray-500 text-sm mt-1 leading-relaxed">
-              Enjoy up to 60% off thousands of styles during the End of Year sale - while supplies last. No code needed.{' '}
-              <button className="text-kicks-blue font-semibold hover:underline">Join us</button>
-              {' '}or{' '}
-              <button className="text-kicks-blue font-semibold hover:underline">Sign-in</button>
+              Enjoy up to 60% off thousands of styles during the End of Year
+              sale - while supplies last. No code needed.{" "}
+              <button className="text-kicks-blue font-semibold hover:underline">
+                Join us
+              </button>{" "}
+              or{" "}
+              <button className="text-kicks-blue font-semibold hover:underline">
+                Sign-in
+              </button>
             </p>
           </motion.div>
 
@@ -44,7 +54,9 @@ export default function Cart() {
               <h3 className="font-display font-black text-2xl uppercase text-gray-300 mb-2">
                 Your bag is empty
               </h3>
-              <p className="text-gray-400 text-sm mb-6">Add some kicks to get started</p>
+              <p className="text-gray-400 text-sm mb-6">
+                Add some kicks to get started
+              </p>
               <Link
                 to="/"
                 className="bg-kicks-dark text-white px-8 py-3 rounded-xl font-bold hover:bg-kicks-blue transition-colors"
@@ -56,7 +68,6 @@ export default function Cart() {
             /* ── Cart content ─────────────────────────── */
             /* Mobile: stacked. Desktop: side-by-side */
             <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 gap-5">
-
               {/* Your Bag — takes 2 cols on desktop */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-2xl p-4 md:p-6">
@@ -64,7 +75,8 @@ export default function Cart() {
                     Your Bag
                   </h2>
                   <p className="text-gray-400 text-xs mb-4">
-                    Items in your bag not reserved- check out now to make them yours.
+                    Items in your bag not reserved- check out now to make them
+                    yours.
                   </p>
                   <div className="space-y-3">
                     <AnimatePresence mode="popLayout">
@@ -78,9 +90,11 @@ export default function Cart() {
 
               {/* Order summary */}
               <div className="lg:col-span-1">
-                <OrderSummary subtotal={total} itemCount={items.reduce((s, i) => s + i.quantity, 0)} />
+                <OrderSummary
+                  subtotal={total}
+                  itemCount={items.reduce((s, i) => s + i.quantity, 0)}
+                />
               </div>
-
             </div>
           )}
         </Container>
@@ -112,8 +126,6 @@ export default function Cart() {
           </div>
         </Container>
       </section>
-
-      <Newsletter />
     </PageTransition>
-  )
+  );
 }

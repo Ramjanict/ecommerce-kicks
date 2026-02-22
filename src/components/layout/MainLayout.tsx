@@ -1,14 +1,17 @@
-import { useLocation, Outlet } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
-import Navbar from './Navbar'
-import Footer from './Footer'
+import { AnimatePresence } from "framer-motion";
+import { Outlet, useLocation } from "react-router-dom";
+import CommonSpace from "../shared/CommonSpace";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 export default function MainLayout() {
-  const location = useLocation()
+  const location = useLocation();
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <CommonSpace>
+        <Navbar />
+      </CommonSpace>
       <main className="flex-1">
         <AnimatePresence mode="wait" initial={false}>
           <Outlet key={location.pathname} />
@@ -16,5 +19,5 @@ export default function MainLayout() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

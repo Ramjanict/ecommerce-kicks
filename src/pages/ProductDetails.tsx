@@ -1,65 +1,76 @@
-import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useAppDispatch } from '@/app/hooks'
-import { addToCart } from '@/features/cart/cartSlice'
-import { products } from '@/features/products/productData'
-import { formatCurrency } from '@/utils/formatCurrency'
-import { fadeInUp } from '@/lib/motionVariants'
-import Container from '@/components/layout/Container'
-import PageTransition from '@/components/layout/PageTransition'
-import Badge from '@/components/shared/Badge'
-import RatingStars from '@/components/shared/RatingStars'
-import SizeSelector from '@/features/products/components/SizeSelector'
-import ProductCard from '@/features/products/components/ProductCard'
-import Newsletter from '@/components/shared/Newsletter'
+import { useAppDispatch } from "@/app/hooks";
+import Container from "@/components/layout/Container";
+import PageTransition from "@/components/layout/PageTransition";
+import Badge from "@/components/shared/Badge";
+import { addToCart } from "@/features/cart/cartSlice";
+import ProductCard from "@/features/products/components/ProductCard";
+import SizeSelector from "@/features/products/components/SizeSelector";
+import {
+  useGetAllProductsQuery,
+  useGetProductsDetailsQuery,
+} from "@/features/products/productAPI";
+import { products } from "@/features/products/productData";
+import { fadeInUp } from "@/lib/motionVariants";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Heart, ShoppingBag } from "lucide-react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
-export default function ProductDetails() {
-  const { id } = useParams<{ id: string }>()
-  const dispatch = useAppDispatch()
-  const product = products.find((p) => p.id === id) ?? products[0]
-  const related = products.filter((p) => p.id !== product.id).slice(0, 4)
+const ProductDetails = () => {
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
 
-  const [selectedSize, setSelectedSize] = useState<number | null>(null)
-  const [selectedColor, setSelectedColor] = useState(0)
-  const [activeImg, setActiveImg] = useState(0)
-  const [added, setAdded] = useState(false)
-  const [sizeError, setSizeError] = useState(false)
+  const { data, isLoading } = useGetAllProductsQuery();
+
+  const { data: productDetails } = useGetProductsDetailsQuery(Number(id), {
+    skip: !id,
+  });
+
+  const recommendedProducts =
+    data?.filter((p) => p.id !== productDetails?.id) ?? [];
+  console.log("productDetails", productDetails);
+
+  const product = products.find((p) => p.id === id) ?? products[0];
+  const related = products.filter((p) => p.id !== product.id).slice(0, 4);
+
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [activeImg, setActiveImg] = useState(0);
+  const [added, setAdded] = useState(false);
+  const [sizeError, setSizeError] = useState(false);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      setSizeError(true)
-      setTimeout(() => setSizeError(false), 2000)
-      return
+      setSizeError(true);
+      setTimeout(() => setSizeError(false), 2000);
+      return;
     }
     dispatch(
       addToCart({
-        id: '',
+        id: "",
         productId: product.id,
         name: product.name,
         brand: product.brand,
         price: product.price,
         image: product.images[0],
         size: selectedSize,
-        color: product.colors[selectedColor]?.name ?? '',
+        color: product.colors[selectedColor]?.name ?? "",
         quantity: 1,
-      })
-    )
-    setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
-  }
+      }),
+    );
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
 
   return (
     <PageTransition>
-
-      {/* ── MOBILE IMAGE SLIDER (full-width, no container) ── */}
       <div className="relative w-full bg-kicks-light-gray md:hidden">
         <AnimatePresence mode="wait">
           <motion.img
             key={activeImg}
-            src={product.images[activeImg]}
-            alt={product.name}
+            src={productDetails?.images[0]}
+            alt={productDetails?.title}
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -30 }}
@@ -71,12 +82,14 @@ export default function ProductDetails() {
 
         {/* Dot indicators */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-          {product.images.map((_, i) => (
+          {productDetails?.images.map((_, i) => (
             <button
               key={i}
               onClick={() => setActiveImg(i)}
               className={`rounded-full transition-all ${
-                i === activeImg ? 'w-5 h-2 bg-kicks-blue' : 'w-2 h-2 bg-gray-300'
+                i === activeImg
+                  ? "w-5 h-2 bg-kicks-blue"
+                  : "w-2 h-2 bg-gray-300"
               }`}
             />
           ))}
@@ -91,7 +104,9 @@ export default function ProductDetails() {
           <ChevronLeft className="w-4 h-4" />
         </button>
         <button
-          onClick={() => setActiveImg((p) => Math.min(product.images.length - 1, p + 1))}
+          onClick={() =>
+            setActiveImg((p) => Math.min(product.images.length - 1, p + 1))
+          }
           disabled={activeImg === product.images.length - 1}
           className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow disabled:opacity-30"
         >
@@ -106,7 +121,7 @@ export default function ProductDetails() {
             key={i}
             onClick={() => setActiveImg(i)}
             className={`shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-              i === activeImg ? 'border-kicks-blue' : 'border-transparent'
+              i === activeImg ? "border-kicks-blue" : "border-transparent"
             }`}
           >
             <img src={img} alt="" className="w-full h-full object-cover" />
@@ -118,19 +133,22 @@ export default function ProductDetails() {
       <section className="py-6 md:py-10">
         <Container>
           <div className="flex flex-col md:grid md:grid-cols-2 md:gap-12">
-
             {/* Desktop gallery — hidden on mobile (shown above) */}
             <div className="hidden md:grid grid-cols-2 gap-3 self-start">
-              {product.images.map((img, i) => (
+              {productDetails?.images.map((img, i) => (
                 <motion.div
                   key={i}
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setActiveImg(i)}
                   className={`aspect-square rounded-2xl overflow-hidden bg-kicks-light-gray cursor-pointer border-2 transition-all ${
-                    i === activeImg ? 'border-kicks-blue' : 'border-transparent'
+                    i === activeImg ? "border-kicks-blue" : "border-transparent"
                   }`}
                 >
-                  <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={img}
+                    alt={`${productDetails.title} view ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
                 </motion.div>
               ))}
             </div>
@@ -142,13 +160,11 @@ export default function ProductDetails() {
               animate="visible"
               className="flex flex-col gap-4 px-0"
             >
-              {product.isNew && (
-                <Badge label="New Release" variant="new" className="self-start" />
-              )}
+              <Badge label="New Release" variant="new" className="self-start" />
 
               <div>
                 <h1 className="font-display font-black text-2xl md:text-3xl uppercase text-kicks-dark leading-tight">
-                  {product.name}
+                  {productDetails?.title}
                 </h1>
                 <p className="text-xl md:text-2xl font-black text-kicks-blue mt-1">
                   {formatCurrency(product.price)}
@@ -157,7 +173,9 @@ export default function ProductDetails() {
 
               {/* Color */}
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-kicks-dark mb-2">Color</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-kicks-dark mb-2">
+                  Color
+                </p>
                 <div className="flex gap-2">
                   {product.colors.map((color, i) => (
                     <motion.button
@@ -167,8 +185,10 @@ export default function ProductDetails() {
                       className="w-8 h-8 rounded-full border-4 transition-all"
                       style={{
                         backgroundColor: color.hex,
-                        borderColor: selectedColor === i ? '#3b5bdb' : 'transparent',
-                        outline: selectedColor === i ? '2px solid #3b5bdb' : 'none',
+                        borderColor:
+                          selectedColor === i ? "#3b5bdb" : "transparent",
+                        outline:
+                          selectedColor === i ? "2px solid #3b5bdb" : "none",
                         outlineOffset: 2,
                       }}
                       title={color.name}
@@ -180,12 +200,20 @@ export default function ProductDetails() {
               {/* Size */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <p className={`text-xs font-bold uppercase tracking-wider ${sizeError ? 'text-red-500' : 'text-kicks-dark'}`}>
-                    {sizeError ? 'Please select a size' : 'Size'}
+                  <p
+                    className={`text-xs font-bold uppercase tracking-wider ${sizeError ? "text-red-500" : "text-kicks-dark"}`}
+                  >
+                    {sizeError ? "Please select a size" : "Size"}
                   </p>
-                  <button className="text-xs text-kicks-blue font-bold hover:underline">SIZE CHART</button>
+                  <button className="text-xs text-kicks-blue font-bold hover:underline">
+                    SIZE CHART
+                  </button>
                 </div>
-                <SizeSelector sizes={product.sizes} selected={selectedSize} onSelect={setSelectedSize} />
+                <SizeSelector
+                  sizes={product.sizes}
+                  selected={selectedSize}
+                  onSelect={setSelectedSize}
+                />
               </div>
 
               {/* Add to Cart + Wishlist */}
@@ -195,11 +223,13 @@ export default function ProductDetails() {
                   whileTap={{ scale: 0.97 }}
                   onClick={handleAddToCart}
                   className={`flex-1 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-                    added ? 'bg-green-600 text-white' : 'bg-kicks-dark text-white hover:bg-kicks-blue'
+                    added
+                      ? "bg-green-600 text-white"
+                      : "bg-kicks-dark text-white hover:bg-kicks-blue"
                   }`}
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  {added ? 'Added to Cart!' : 'ADD TO CART'}
+                  {added ? "Added to Cart!" : "ADD TO CART"}
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -225,15 +255,17 @@ export default function ProductDetails() {
                   About the Product
                 </p>
                 <p className="text-gray-500 text-sm">
-                  {product.colors[selectedColor]?.name} / {product.colors.map(c => c.name).join(' / ')}
+                  {product.colors[selectedColor]?.name} /{" "}
+                  {product.colors.map((c) => c.name).join(" / ")}
                 </p>
                 <p className="text-gray-400 text-xs mt-1.5 mb-2">
-                  This product is excluded from all promotional discounts and offers.
+                  This product is excluded from all promotional discounts and
+                  offers.
                 </p>
                 <ul className="space-y-1">
                   {[
-                    'Pay over time in interest-free installments with Affirm, Klarna or Afterpay.',
-                    'Join adiClub to get unlimited free standard shipping, returns, & exchanges.',
+                    "Pay over time in interest-free installments with Affirm, Klarna or Afterpay.",
+                    "Join adiClub to get unlimited free standard shipping, returns, & exchanges.",
                   ].map((item, i) => (
                     <li key={i} className="text-gray-500 text-xs flex gap-2">
                       <span className="text-kicks-dark mt-0.5">•</span>
@@ -247,7 +279,6 @@ export default function ProductDetails() {
         </Container>
       </section>
 
-      {/* ── YOU MAY ALSO LIKE ─────────────────────── */}
       <section className="py-6 md:py-10">
         <Container>
           <div className="flex items-center justify-between mb-5">
@@ -267,14 +298,14 @@ export default function ProductDetails() {
           </div>
           {/* 2-col on mobile, 4-col on desktop */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {related.map((product, i) => (
+            {recommendedProducts.map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
           </div>
         </Container>
       </section>
-
-      <Newsletter />
     </PageTransition>
-  )
-}
+  );
+};
+
+export default ProductDetails;
