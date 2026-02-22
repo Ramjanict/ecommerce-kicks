@@ -59,8 +59,8 @@ kicks/
 
 ## Pages
 
-| Route | Description |
-|-------|-------------|
-| `/` | Homepage: hero, new drops, categories, reviews |
+| Route          | Description                                          |
+| -------------- | ---------------------------------------------------- |
+| `/`            | Homepage: hero, new drops, categories, reviews       |
 | `/product/:id` | Product detail page with gallery, sizes, add to cart |
-| `/cart` | Cart with items, quantity selector, order summary |
+| `/cart`        | Cart with items, quantity selector, order summary    |
