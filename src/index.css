@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ─── Tailwind v4: CSS-native theme ─── */
+@theme {
+  /* Fonts */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Barlow Condensed', sans-serif;
+
+  /* Brand colors */
+  --color-kicks-blue:       #3b5bdb;
+  --color-kicks-orange:     #fd7e14;
+  --color-kicks-dark:       #1a1a1a;
+  --color-kicks-gray:       #e8e8e8;
+  --color-kicks-light-gray: #f5f5f5;
+
+  /* shadcn/ui semantic tokens (hsl mapped to plain values) */
+  --color-background:            oklch(96% 0 0);
+  --color-foreground:            oklch(10% 0 0);
+  --color-card:                  oklch(100% 0 0);
+  --color-card-foreground:       oklch(10% 0 0);
+  --color-popover:               oklch(100% 0 0);
+  --color-popover-foreground:    oklch(10% 0 0);
+  --color-primary:               oklch(10% 0 0);
+  --color-primary-foreground:    oklch(100% 0 0);
+  --color-secondary:             oklch(93% 0 0);
+  --color-secondary-foreground:  oklch(10% 0 0);
+  --color-muted:                 oklch(93% 0 0);
+  --color-muted-foreground:      oklch(45% 0 0);
+  --color-accent:                oklch(57% 0.18 264);
+  --color-accent-foreground:     oklch(100% 0 0);
+  --color-destructive:           oklch(60% 0.22 25);
+  --color-destructive-foreground:oklch(98% 0 0);
+  --color-border:                oklch(88% 0 0);
+  --color-input:                 oklch(88% 0 0);
+  --color-ring:                  oklch(10% 0 0);
+
+  /* Border radius */
+  --radius-sm:  0.5rem;
+  --radius-md:  0.625rem;
+  --radius-lg:  0.75rem;
+  --radius-xl:  1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+}
+
+/* ─── Base styles ─── */
+@layer base {
+  *, *::before, *::after {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ─── Utilities ─── */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
