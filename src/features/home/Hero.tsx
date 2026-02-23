@@ -64,7 +64,7 @@ const Hero = () => {
               />
 
               <CommonButton>
-                <Link to="/product/5">SHOP NOW</Link>
+                <Link to="/product/72">SHOP NOW</Link>
               </CommonButton>
             </div>
           </div>
