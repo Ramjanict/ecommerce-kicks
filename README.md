@@ -11,10 +11,10 @@ A production-ready sneaker e-commerce app built with React 18, TypeScript, Tailw
 
 - **React 18** + **TypeScript**
 - **Vite** — lightning-fast dev server & bundler
-- **Tailwind CSS v3** — utility-first styling
+- **Tailwind CSS v4** — utility-first styling
 - **shadcn/ui** — accessible component primitives
 - **Framer Motion** — smooth page transitions & animations
-- **Redux Toolkit** — global state (cart, products)
+- **Redux Toolkit** — global state (cart, products) in localStorage so cart items remain even after reload, use Redux Toolkit + redux-persist.
 - **React Router v6** — client-side routing
 
 ## Getting Started
