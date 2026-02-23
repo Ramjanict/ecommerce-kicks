@@ -32,7 +32,7 @@ export default function Newsletter() {
           <p className="text-blue-100 text-sm mb-5">
             Sign up for free! Join the community.
           </p>
-          <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm">
+          <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm pb-10">
             <input
               type="email"
               value={email}

@@ -4,20 +4,19 @@ import PageTransition from "@/components/layout/PageTransition";
 import CartItemComponent from "@/features/cart/CartItem";
 import { selectCartItems, selectCartTotal } from "@/features/cart/cartSlice";
 import OrderSummary from "@/features/cart/OrderSummary";
-import ProductCard from "@/features/products/components/ProductCard";
 import { useGetAllProductsQuery } from "@/features/products/productAPI";
+import ProductCarouselSection from "@/features/products/ProductCarouselSection";
 import { fadeInUp } from "@/lib/motionVariants";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
   const items = useAppSelector(selectCartItems);
   const total = useAppSelector(selectCartTotal);
-
-  const { data } = useGetAllProductsQuery();
-
+  const { data, isLoading } = useGetAllProductsQuery();
   const allProducts = data ?? [];
+
   return (
     <PageTransition>
       <section className="py-5 md:py-8">
@@ -98,28 +97,11 @@ export default function Cart() {
       </section>
 
       <section className="py-6 md:py-10">
-        <Container>
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-display font-black text-xl md:text-2xl text-kicks-dark">
-              You may also like
-            </h2>
-            <div className="flex gap-2">
-              {[ChevronLeft, ChevronRight].map((Icon, i) => (
-                <button
-                  key={i}
-                  className="w-8 h-8 rounded-lg bg-kicks-gray text-kicks-dark hover:bg-kicks-blue hover:text-white transition-colors flex items-center justify-center"
-                >
-                  <Icon className="w-4 h-4" />
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {allProducts.slice(0, 4).map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
-          </div>
-        </Container>
+        <ProductCarouselSection
+          title="You may also like"
+          products={allProducts}
+          isLoading={isLoading}
+        />
       </section>
     </PageTransition>
   );

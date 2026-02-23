@@ -8,7 +8,7 @@ export default function MainLayout() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col ">
       <CommonSpace>
         <Navbar />
       </CommonSpace>

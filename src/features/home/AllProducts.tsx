@@ -1,14 +1,16 @@
 import Container from "@/components/layout/Container";
+import CardLoader from "@/components/shared/CardLoader";
 import CommonButton from "@/components/shared/CommonButton";
 import CommonSpace from "@/components/shared/CommonSpace";
 import SectionTitle from "@/components/shared/SectionTitle";
 import ProductCard from "@/features/products/components/ProductCard";
+import { useGetAllProductsQuery } from "../products/productAPI";
 import { Product } from "../products/types";
 
-interface ProductProps {
-  allProducts: Product[];
-}
-const AllProducts: React.FC<ProductProps> = ({ allProducts }) => {
+const AllProducts = () => {
+  const { data, isLoading } = useGetAllProductsQuery();
+  const allProducts: Product[] = data ?? [];
+  const loadingList = new Array(8).fill(0);
   return (
     <div>
       <Container>
@@ -21,9 +23,15 @@ const AllProducts: React.FC<ProductProps> = ({ allProducts }) => {
         </div>
         <CommonSpace>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {allProducts.map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
+            {isLoading ? (
+              loadingList.map((_, i) => <CardLoader key={i} />)
+            ) : allProducts.length > 0 ? (
+              allProducts.map((product, i) => (
+                <ProductCard key={product.id} product={product} index={i} />
+              ))
+            ) : (
+              <p>No products found</p>
+            )}
           </div>
         </CommonSpace>
       </Container>

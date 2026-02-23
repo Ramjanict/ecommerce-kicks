@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="">
       <Container>
         <Newsletter />
-        <div className="bg-kicks-dark rounded-3xl px-4 pt-4  -mt-5">
+        <div className="bg-kicks-dark rounded-3xl px-4 pt-4 -mt-5">
           <div className="w-fll  flex flex-col gap-8 md:grid md:grid-cols-4 md:gap-10  text-white">
             <div>
               <h4 className="text-kicks-orange font-bold text-base mb-3">
@@ -85,7 +85,7 @@ export default function Footer() {
           </div>
           <img src={Logo} alt="logo" className=" max-h-[300px] mt-16 " />
         </div>
-        <div className="py-5 text-kicks-dark">
+        <div className="py-5 text-kicks-dark z-30 ">
           <p className="text-center text-xs">© All rights reserved</p>
         </div>
       </Container>
