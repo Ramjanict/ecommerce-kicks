@@ -40,7 +40,7 @@ export default function Navbar() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="flex items-center justify-between h-16 md:h-24 bg-[#FAFAFA] rounded-3xl p-8 ">
-            <div className="flex items-center gap-4 min-w-20">
+            <div className="flex items-center gap-4 sm:min-w-20">
               <button
                 onClick={() => setMobileOpen(true)}
                 className="md:hidden p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
@@ -51,7 +51,7 @@ export default function Navbar() {
               <NavMenu />
             </div>
 
-            <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <Link to="/" className="">
               <img src={logo} alt="Kicks logo" />
             </Link>
 

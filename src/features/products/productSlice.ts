@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { products } from "./productData";
 import { Product } from "./types";
 
 interface ProductsState {
-  items: Product[];
+  items: Product[] | [];
   selectedProduct: Product | null;
   filter: string;
   loading: boolean;
 }
 
 const initialState: ProductsState = {
-  items: products,
+  items: [],
   selectedProduct: null,
   filter: "all",
   loading: false,

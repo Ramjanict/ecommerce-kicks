@@ -5,7 +5,7 @@ import CartItemComponent from "@/features/cart/CartItem";
 import { selectCartItems, selectCartTotal } from "@/features/cart/cartSlice";
 import OrderSummary from "@/features/cart/OrderSummary";
 import ProductCard from "@/features/products/components/ProductCard";
-import { products } from "@/features/products/productData";
+import { useGetAllProductsQuery } from "@/features/products/productAPI";
 import { fadeInUp } from "@/lib/motionVariants";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
@@ -15,11 +15,13 @@ export default function Cart() {
   const items = useAppSelector(selectCartItems);
   const total = useAppSelector(selectCartTotal);
 
+  const { data } = useGetAllProductsQuery();
+
+  const allProducts = data ?? [];
   return (
     <PageTransition>
       <section className="py-5 md:py-8">
         <Container>
-          {/* Sale banner */}
           <motion.div
             variants={fadeInUp}
             initial="hidden"
@@ -43,7 +45,6 @@ export default function Cart() {
           </motion.div>
 
           {items.length === 0 ? (
-            /* ── Empty state ─────────────────────────── */
             <motion.div
               variants={fadeInUp}
               initial="hidden"
@@ -65,10 +66,7 @@ export default function Cart() {
               </Link>
             </motion.div>
           ) : (
-            /* ── Cart content ─────────────────────────── */
-            /* Mobile: stacked. Desktop: side-by-side */
             <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 gap-5">
-              {/* Your Bag — takes 2 cols on desktop */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-2xl p-4 md:p-6">
                   <h2 className="font-display font-black text-xl md:text-2xl uppercase text-kicks-dark mb-0.5">
@@ -88,7 +86,6 @@ export default function Cart() {
                 </div>
               </div>
 
-              {/* Order summary */}
               <div className="lg:col-span-1">
                 <OrderSummary
                   subtotal={total}
@@ -100,7 +97,6 @@ export default function Cart() {
         </Container>
       </section>
 
-      {/* ── You may also like ─────────────────────── */}
       <section className="py-6 md:py-10">
         <Container>
           <div className="flex items-center justify-between mb-5">
@@ -118,9 +114,8 @@ export default function Cart() {
               ))}
             </div>
           </div>
-          {/* 2-col on mobile, 4-col on desktop */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {products.slice(0, 4).map((product, i) => (
+            {allProducts.slice(0, 4).map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
           </div>

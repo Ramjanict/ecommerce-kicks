@@ -8,11 +8,8 @@ import {
   useGetAllProductsQuery,
   useGetProductsDetailsQuery,
 } from "@/features/products/productAPI";
-import { useState } from "react";
 
 const Home = () => {
-  const [catPage, setCatPage] = useState(0);
-
   const { data, isLoading } = useGetAllProductsQuery();
   const { data: details } = useGetProductsDetailsQuery(4);
 
@@ -30,7 +27,7 @@ const Home = () => {
         <p>No products found</p>
       )}
 
-      <Category setCatPage={setCatPage} />
+      <Category />
       <Review />
     </PageTransition>
   );

@@ -7,14 +7,10 @@ import whiteLogo from "../../assets/images/whiteLogo.png";
 import CommonButton from "./CommonButton";
 export default function Newsletter() {
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      setSubmitted(true);
-      setEmail("");
-      setTimeout(() => setSubmitted(false), 3000);
     }
   };
 

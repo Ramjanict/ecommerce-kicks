@@ -34,5 +34,9 @@ export const productAPI = baseAPI.injectEndpoints({
   }),
 });
 
-export const { useGetAllProductsQuery, useGetProductsDetailsQuery } =
-  productAPI;
+export const {
+  useGetAllProductsQuery,
+  useGetProductsDetailsQuery,
+  useGetAllCategoriesQuery,
+  useGetSingleCategoryQuery,
+} = productAPI;

@@ -14,8 +14,8 @@ const Hero = () => {
 
   return (
     <div className="w-full mx-auto max-w-330 px-4 sm:px-6 lg:px-8">
-      <div className="w-full  overflow-hidden">
-        <h1 className="flex items-center whitespace-nowrap font-bold leading-none text-[48px] sm:text-[90px] md:text-[150px] lg:text-[216px]">
+      <div className="w-full  flex items-center justify-center  overflow-hidden">
+        <h1 className="flex items-center whitespace-nowrap font-bold leading-none text-[60px] sm:text-[60px] lg:text-[100px] xl:text-[216px]">
           <span className="text-kicks-dark">DO&nbsp;IT&nbsp;</span>
           <span className="text-kicks-blue">RIGHT</span>
         </h1>
@@ -56,7 +56,7 @@ const Hero = () => {
             Nike product of the year
           </div>
 
-          <div className="absolute left-8 bottom-8 z-10 p-5 flex flex-col justify-end   ">
+          <div className="absolute left-4 bottom-4 sm:left-8 sm:bottom-8 z-10 sm:p-5 flex flex-col justify-end   ">
             <div className="">
               <SectionTitle
                 title="Nike Air Max"
@@ -69,7 +69,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="absolute right-8 bottom-8 flex flex-col gap-2 z-10">
+          <div className="absolute right-4 bottom-4 sm:right-8 sm:bottom-8 flex flex-col gap-2 z-10">
             {heroThumbs.slice(1).map((src, i) => (
               <motion.button
                 key={i}
