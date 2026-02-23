@@ -2,6 +2,11 @@
 
 A production-ready sneaker e-commerce app built with React 18, TypeScript, Tailwind CSS v4, shadcn/ui, Redux Toolkit, and Framer Motion.
 
+## Live
+<a href="https://ecommerce-kicks-steel.vercel.app/" target="_blank" rel="noopener noreferrer">
+  View Live Demo
+</a>
+
 ## Tech Stack
 
 - **React 18** + **TypeScript**
