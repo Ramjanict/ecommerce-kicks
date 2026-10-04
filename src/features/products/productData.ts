@@ -1,17 +1,22 @@
 // src/data/products.ts
 import { Review } from "./types";
 
-// Product images
-
 // Review images
-import review3Img from "@/assets/images/product10.png";
 import review1Img from "@/assets/images/product8.png";
 import review2Img from "@/assets/images/product9.png";
+import review3Img from "@/assets/images/product10.png";
 
 // Review avatars
+import avatar1 from "@/assets/images/product9.png";
 import avatar2 from "@/assets/images/product10.png";
 import avatar3 from "@/assets/images/product8.png";
-import avatar1 from "@/assets/images/product9.png";
+
+// Additional sneaker product images
+import sneaker1 from "@/assets/images/product11.jpg";
+import sneaker2 from "@/assets/images/product12.jpg";
+import sneaker3 from "@/assets/images/product13.jpg";
+import sneaker4 from "@/assets/images/product14.jpg";
+import sneaker5 from "@/assets/images/product15.jpg";
 
 export const reviews: Review[] = [
   {
@@ -44,4 +49,12 @@ export const reviews: Review[] = [
     image: review3Img,
     date: "2024-09-28",
   },
+];
+
+export const newDropSneakerImages = [
+  { id: 11, name: "Air Max Red Velocity", image: sneaker1, tag: "Running" },
+  { id: 12, name: "Retro Street High-Top", image: sneaker2, tag: "Basketball" },
+  { id: 13, name: "Minimal Classic White", image: sneaker3, tag: "Lifestyle" },
+  { id: 14, name: "Neon Cyber Trainer", image: sneaker4, tag: "Training" },
+  { id: 15, name: "Chunky Urban Lifestyle", image: sneaker5, tag: "Streetwear" },
 ];
